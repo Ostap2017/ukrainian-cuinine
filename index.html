@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Українська національна кухня: борщ, вареники, голубці, сало та інші традиційні страви за родинними рецептами.">
+    <title>Українська національна кухня</title>
+
+    <!-- Тема та клас "js" встановлюються до завантаження сторінки, щоб не було миготіння -->
+    <script>
+        (function () {
+            document.documentElement.classList.add("js");
+            var theme = null;
+            try { theme = localStorage.getItem("theme"); } catch (e) {}
+            if (theme !== "dark" && theme !== "light") {
+                theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <a class="skip-link" href="#main">Перейти до змісту</a>
+
+    <header class="site-header">
+        <nav class="site-nav" aria-label="Головна навігація">
+            <ul>
+                <li><a href="#about">Про нас</a></li>
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#process">Як готуємо</a></li>
+                <li><a href="#history">Історія</a></li>
+                <li><a href="#hours">Години</a></li>
+                <li><a href="#booking">Бронювання</a></li>
+                <li><a href="#faq">Питання</a></li>
+                <li><a href="#contact">Контакти</a></li>
+            </ul>
+        </nav>
+        <button class="theme-toggle" id="theme-toggle" type="button">
+            <span class="theme-toggle__dot" aria-hidden="true"></span>
+            <span class="theme-toggle__label">Чорна тема</span>
+        </button>
+    </header>
+
+    <main id="main">
+
+        <!-- ============ Герой і годинник ============ -->
+        <section class="hero" aria-labelledby="hero-title">
+            <p class="eyebrow">Домашня українська кухня</p>
+            <h1 class="title" id="hero-title">Українська національна кухня</h1>
+            <p class="subtitle">Ласкаво просимо до нашого сайту!</p>
+
+            <div class="clock-card">
+                <svg class="dial" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+                    <circle class="dial__face" cx="100" cy="100" r="96"/>
+                    <circle class="dial__ring" cx="100" cy="100" r="84"/>
+
+                    <g class="dial__ticks">
+                        <line class="tick tick--major" x1="100" y1="6" x2="100" y2="20" transform="rotate(0 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(30 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(60 100 100)"/>
+                        <line class="tick tick--major" x1="100" y1="6" x2="100" y2="20" transform="rotate(90 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(120 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(150 100 100)"/>
+                        <line class="tick tick--major" x1="100" y1="6" x2="100" y2="20" transform="rotate(180 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(210 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(240 100 100)"/>
+                        <line class="tick tick--major" x1="100" y1="6" x2="100" y2="20" transform="rotate(270 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(300 100 100)"/>
+                        <line class="tick" x1="100" y1="6" x2="100" y2="16" transform="rotate(330 100 100)"/>
+                    </g>
+
+                    <text class="dial__num" x="100" y="44">XII</text>
+                    <text class="dial__num" x="156" y="100">III</text>
+                    <text class="dial__num" x="100" y="156">VI</text>
+                    <text class="dial__num" x="44" y="100">IX</text>
+
+                    <line class="hand hand--hour" id="hour-hand" x1="100" y1="100" x2="100" y2="58" transform="rotate(0 100 100)"/>
+                    <line class="hand hand--minute" id="minute-hand" x1="100" y1="100" x2="100" y2="30" transform="rotate(0 100 100)"/>
+                    <line class="hand hand--second" id="second-hand" x1="100" y1="118" x2="100" y2="20" transform="rotate(0 100 100)"/>
+                    <circle class="dial__center" cx="100" cy="100" r="5"/>
+                </svg>
+
+                <div class="clock-card__digital">
+                    <time class="digital" id="digital-time" datetime="00:00:00">00:00:00</time>
+                    <p class="digital-date" id="digital-date"></p>
+                    <p class="open-status" id="open-status">Перевіряємо графік…</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ Про нас ============ -->
+        <section class="about reveal" id="about" aria-labelledby="about-title">
+            <h2 class="section-title" id="about-title">Про нас</h2>
+            <p class="lead">Ми пропонуємо найкращі страви української національної кухні, приготовані з любов'ю та традиційними рецептами.</p>
+            <ul class="facts">
+                <li>
+                    <span class="facts__num">25+</span>
+                    <span class="facts__label">років традицій</span>
+                </li>
+                <li>
+                    <span class="facts__num">40</span>
+                    <span class="facts__label">перевірених рецептів</span>
+                </li>
+                <li>
+                    <span class="facts__num">100%</span>
+                    <span class="facts__label">домашніх інгредієнтів</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ============ Меню ============ -->
+        <section class="menu reveal" id="menu" aria-labelledby="menu-title">
+            <h2 class="section-title" id="menu-title">Меню</h2>
+            <p class="section-intro">Оберіть страву, яка вже чекає на вас на кухні.</p>
+
+            <div class="filters" role="group" aria-label="Фільтр страв">
+                <button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true">Усі</button>
+                <button class="filter-btn" type="button" data-filter="main" aria-pressed="false">Основні</button>
+                <button class="filter-btn" type="button" data-filter="meat" aria-pressed="false">М'ясні</button>
+                <button class="filter-btn" type="button" data-filter="veg" aria-pressed="false">Вегетаріанські</button>
+                <button class="filter-btn" type="button" data-filter="sweet" aria-pressed="false">Солодке</button>
+            </div>
+
+            <div class="dishes">
+                <article class="dish" data-category="main meat">
+                    <div class="dish__media">
+                        <img src="images/borscht.jpg" alt="Борщ у глибокій миски зі сметаною" width="400" height="300" loading="lazy">
+                    </div>
+                    <div class="dish__body">
+                        <p class="dish__tag">Основна страва</p>
+                        <h3 class="dish__title">Борщ</h3>
+                        <p class="dish__details">Найпопулярніша українська страва, приготована з буряка та м'яса.</p>
+                        <p class="dish__price">200 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="main meat veg">
+                    <div class="dish__media">
+                        <img src="images/varenyky.jpg" alt="Вареники з картоплею на тарілці" width="400" height="300" loading="lazy">
+                    </div>
+                    <div class="dish__body">
+                        <p class="dish__tag">Основна страва</p>
+                        <h3 class="dish__title">Вареники</h3>
+                        <p class="dish__details">Традиційні українські вареники, заповнені м'ясом або картоплею.</p>
+                        <p class="dish__price">150 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="main meat">
+                    <div class="dish__media">
+                        <img src="images/golubtsi.jpg" alt="Голубці у томатному соусі" width="400" height="300" loading="lazy">
+                    </div>
+                    <div class="dish__body">
+                        <p class="dish__tag">Основна страва</p>
+                        <h3 class="dish__title">Голубці</h3>
+                        <p class="dish__details">Традиційна українська страва, приготована з капусти та м'яса.</p>
+                        <p class="dish__price">180 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="meat">
+                    <div class="dish__media">
+                        <img src="images/salo.jpg" alt="Сало з чорним хлібом і цибулею" width="400" height="300" loading="lazy">
+                    </div>
+                    <div class="dish__body">
+                        <p class="dish__tag">Закуска</p>
+                        <h3 class="dish__title">Сало</h3>
+                        <p class="dish__details">Традиційна українська закуска з м'яса, подається з чорним хлібом і цибулею.</p>
+                        <p class="dish__price">120 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="main veg">
+                    <img class="dish__media" src="images/holodnik.jpg" alt="Холодник у мисці з зеленню" width="400" height="300" loading="lazy">
+                    <div class="dish__body">
+                        <p class="dish__tag">Літній суп</p>
+                        <h3 class="dish__title">Холодник</h3>
+                        <p class="dish__details">Суп на кефірі з огірками, редискою та зеленою цибулею.</p>
+                        <p class="dish__price">140 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="main veg">
+                    <img class="dish__media" src="images/deruni.jpg" alt="Деруни зі сметаною" width="400" height="300" loading="lazy">
+                    <div class="dish__body">
+                        <p class="dish__tag">Вегетаріанська</p>
+                        <h3 class="dish__title">Деруни</h3>
+                        <p class="dish__details">Картопляні оладки зі сметаною, хрусткі з обох боків.</p>
+                        <p class="dish__price">130 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="sweet veg">
+                    <img class="dish__media" src="images/sirniki.webp" alt="Сирники з ягідним соусом" width="400" height="300" loading="lazy">
+                    <div class="dish__body">
+                        <p class="dish__tag">Десерт</p>
+                        <h3 class="dish__title">Сирники</h3>
+                        <p class="dish__details">Творожні оладки зі сметаною та ягідним соусом.</p>
+                        <p class="dish__price">110 грн</p>
+                    </div>
+                </article>
+
+                <article class="dish" data-category="sweet veg">
+                    <img class="dish__media" src="images/kutya.jpg" alt="Кутя з маком і медом" width="400" height="300" loading="lazy">
+                    <div class="dish__body">
+                        <p class="dish__tag">Святкова страва</p>
+                        <h3 class="dish__title">Кутя</h3>
+                        <p class="dish__details">Пшениця з маком і медом, символ достатку та традиційна різдвяна страва.</p>
+                        <p class="dish__price">90 грн</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ============ Як готуємо ============ -->
+        <section class="process reveal" id="process" aria-labelledby="process-title">
+            <h2 class="section-title" id="process-title">Як ми готуємо</h2>
+            <p class="section-intro">Без поспіху, за перевіреними рецептами і з увагою до кожної деталі.</p>
+
+            <ol class="steps">
+                <li class="step">
+                    <span class="step__num">I</span>
+                    <h3 class="step__title">Свіжі продукти</h3>
+                    <p>Овочі, м'ясо та крупи обираємо свіжими й сезонними.</p>
+                </li>
+                <li class="step">
+                    <span class="step__num">II</span>
+                    <h3 class="step__title">Повільне томлення</h3>
+                    <p>Борщ і голубці томимо на повільному вогні, щоб смаки повністю розкрилися.</p>
+                </li>
+                <li class="step">
+                    <span class="step__num">III</span>
+                    <h3 class="step__title">Ручна робота</h3>
+                    <p>Тісто для вареників і начинки для голубців готуємо вручну, як у домашній кухні.</p>
+                </li>
+                <li class="step">
+                    <span class="step__num">IV</span>
+                    <h3 class="step__title">Подача</h3>
+                    <p>Кожну страву подаємо гарячою, з домашнім хлібом і сметаною.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ============ Історія ============ -->
+        <section class="history reveal" id="history" aria-labelledby="history-title">
+            <h2 class="section-title" id="history-title">Історія нашої кухні</h2>
+            <p class="section-intro">Кожна страва має свій час і свою історію.</p>
+
+            <ol class="timeline">
+                <li class="timeline__item">
+                    <p class="timeline__year">Давні часи</p>
+                    <h3 class="timeline__title">Основа столу</h3>
+                    <p class="timeline__text">Хліб, борошно, крупи й городина були основою харчування на українських землях.</p>
+                </li>
+                <li class="timeline__item">
+                    <p class="timeline__year">Козацькі часи</p>
+                    <h3 class="timeline__title">Їжа в дорозі</h3>
+                    <p class="timeline__text">Сало, борщ і каша були звичною їжею в походах, бо добре зберігалися й давали сили.</p>
+                </li>
+                <li class="timeline__item">
+                    <p class="timeline__year">Родинні рецепти</p>
+                    <h3 class="timeline__title">Від бабусь до онуків</h3>
+                    <p class="timeline__text">Страви передавалися з покоління в покоління, і кожна родина мала свій варіант борщу.</p>
+                </li>
+                <li class="timeline__item">
+                    <p class="timeline__year">Сьогодні</p>
+                    <h3 class="timeline__title">Наша кухня</h3>
+                    <p class="timeline__text">Ми зберігаємо традиційні рецепти та готуємо їх так, як це робили наші предки.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- ============ Години роботи ============ -->
+        <section class="hours reveal" id="hours" aria-labelledby="hours-title">
+            <h2 class="section-title" id="hours-title">Години роботи</h2>
+            <table class="hours-table">
+                <caption class="visually-hidden">Години роботи ресторану по днях тижня</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">День</th>
+                        <th scope="col">Години</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-days="1,2,3,4,5">
+                        <th scope="row">Понеділок – П'ятниця</th>
+                        <td>10:00 – 22:00</td>
+                    </tr>
+                    <tr data-days="6">
+                        <th scope="row">Субота</th>
+                        <td>11:00 – 23:00</td>
+                    </tr>
+                    <tr data-days="0">
+                        <th scope="row">Неділя</th>
+                        <td>11:00 – 21:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ============ Бронювання ============ -->
+        <section class="booking reveal" id="booking" aria-labelledby="booking-title">
+            <h2 class="section-title" id="booking-title">Бронювання столика</h2>
+            <p class="section-intro">Заповніть форму, і ми зв'яжемося з вами для підтвердження.</p>
+
+            <form class="booking-form" action="#" method="post">
+                <div class="field">
+                    <label for="name">Ім'я</label>
+                    <input type="text" id="name" name="name" autocomplete="name" required>
+                </div>
+                <div class="field">
+                    <label for="phone">Телефон</label>
+                    <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+380" required>
+                </div>
+                <div class="field">
+                    <label for="date">Дата</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="field">
+                    <label for="time">Час</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="field field--full">
+                    <label for="guests">Кількість гостей</label>
+                    <select id="guests" name="guests">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 і більше</option>
+                    </select>
+                </div>
+                <div class="field field--full">
+                    <label for="comment">Побажання</label>
+                    <textarea id="comment" name="comment" rows="3" placeholder="Наприклад, столик біля вікна"></textarea>
+                </div>
+                <button type="submit" class="btn">Забронювати</button>
+            </form>
+        </section>
+
+        <!-- ============ Питання і відповіді ============ -->
+        <section class="faq reveal" id="faq" aria-labelledby="faq-title">
+            <h2 class="section-title" id="faq-title">Питання і відповіді</h2>
+
+            <details class="faq__item">
+                <summary>Чи можна замовити страви з собою?</summary>
+                <p>Так, більшість страв можна забрати з собою. Уточнюйте наявність у персоналу.</p>
+            </details>
+            <details class="faq__item">
+                <summary>Чи є вегетаріанські страви?</summary>
+                <p>Так, вони позначені фільтром «Вегетаріанські» у меню.</p>
+            </details>
+            <details class="faq__item">
+                <summary>Чи приймаєте бронювання для великих компаній?</summary>
+                <p>Так, для 5 і більше гостей рекомендуємо бронювати заздалегідь через форму або телефоном.</p>
+            </details>
+            <details class="faq__item">
+                <summary>Чи є дитяче меню?</summary>
+                <p>Для дітей можемо підготувати порції менших розмірів. Уточнюйте при бронюванні.</p>
+            </details>
+        </section>
+
+        <!-- ============ Новини ============ -->
+        <section class="newsletter reveal" aria-labelledby="news-title">
+            <h2 class="section-title" id="news-title">Новини та акції</h2>
+            <p class="section-intro">Підпишіться, щоб першими дізнаватися про нові страви та святкові меню.</p>
+
+            <form class="newsletter__form" action="#" method="post">
+                <label class="visually-hidden" for="news-email">Ваш email</label>
+                <input type="email" id="news-email" name="email" placeholder="Ваш email" autocomplete="email" required>
+                <button type="submit" class="btn">Підписатися</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ============ Контакти ============ -->
+    <section class="contact reveal" id="contact" aria-labelledby="contact-title">
+        <h2 class="section-title" id="contact-title">Контакти</h2>
+        <ul class="contact-list">
+            <li>
+                <span class="contact-list__label">Телефон</span>
+                <a href="tel:+380661842243">+380 66 184 2243</a>
+            </li>
+            <li>
+                <span class="contact-list__label">Email</span>
+                <a href="mailto:info@ukrainiankitchen.com">info@ukrainiankitchen.com</a>
+            </li>
+            <li>
+                <span class="contact-list__label">Адреса</span>
+                <span>м. Львів, вул. Героїв Майдану, буд. 43А</span>
+            </li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Українська національна кухня. Всі права захищені.</p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <button class="to-top" type="button" aria-label="Повернутися нагору">↑</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
